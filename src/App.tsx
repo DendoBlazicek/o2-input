@@ -3,30 +3,43 @@ import { Container, Stack } from '@mui/material';
 import CustomThemeProvider from '@/ThemeProvider.tsx';
 
 const inputVariants: CustomInputProps[] = [
-  { id: 'default', helperText: 'Optional helper text', placeholder: 'Placeholder Text' },
   {
+    label: 'Default',
+    id: 'default',
+    helperText: 'Optional helper text',
+    placeholder: 'Placeholder Text'
+  },
+  {
+    label: 'Disabled',
     id: 'disabled',
     placeholder: 'Placeholder Text',
     disabled: true
   },
   {
+    label: 'Warning',
     id: 'warning',
-    warningText: 'Warning message'
+    helperText: 'Warning message',
+    warning: true
   },
   {
+    label: 'Error',
     id: 'error',
-    errorText: 'Error message'
+    helperText: 'Error message',
+    error: true
   },
   {
+    label: 'Required',
     id: 'required',
     required: true
   },
   {
+    label: 'Readonly',
     id: 'readonly',
     readOnly: true,
     value: 'Read only value'
   },
   {
+    label: 'Password',
     id: 'password',
     type: 'password'
   }

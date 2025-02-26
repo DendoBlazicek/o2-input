@@ -1,12 +1,11 @@
 import { FC } from 'react';
-import { FormControl, FormHelperText, FormLabel, TextField, TextFieldProps } from '@mui/material';
+import { FormControl, FormLabel, TextField, TextFieldProps, Typography } from '@mui/material';
 
 export type CustomInputProps = TextFieldProps & {
   id: string;
   readOnly?: boolean;
-  errorText?: string;
   helperText?: string;
-  warningText?: string;
+  warning?: boolean;
 };
 
 const warningColor = 'warning.main';
@@ -20,46 +19,38 @@ const warningBorder = {
   }
 };
 
-const firstLetterToUpperCase = (id: string) => id.charAt(0).toUpperCase() + id.slice(1);
-
 const CustomInput: FC<CustomInputProps> = ({
-  errorText,
+  error,
   helperText,
   id,
+  label,
   readOnly,
   required,
-  warningText,
+  warning,
   ...props
 }) => {
-  const isWarning = !errorText && !!warningText;
-
   return (
     <FormControl fullWidth>
-      <FormLabel
-        error={errorText != null}
-        htmlFor={id}
-        sx={{ color: isWarning ? warningColor : undefined }}
-      >
-        {firstLetterToUpperCase(id)}
+      <FormLabel error={error} htmlFor={id} sx={{ color: warning ? warningColor : undefined }}>
+        {label}
         {!required && <small> Optional</small>}
       </FormLabel>
       <TextField
         size='medium'
         color='primary'
-        error={errorText != null}
+        error={error}
         id={id}
         slotProps={{
           input: { readOnly, required }
         }}
-        sx={isWarning ? warningBorder : undefined}
+        sx={warning ? warningBorder : undefined}
+        helperText={
+          <Typography sx={{ color: warning ? warningColor : undefined }}>
+            {helperText ?? ''}
+          </Typography>
+        }
         {...props}
       />
-      <FormHelperText
-        error={errorText != null}
-        sx={{ color: isWarning ? warningColor : undefined }}
-      >
-        {errorText ?? warningText ?? helperText ?? null}
-      </FormHelperText>
     </FormControl>
   );
 };
